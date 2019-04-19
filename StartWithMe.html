@@ -8,11 +8,11 @@
                 font-weight: bold;
                 color: blue;
             }
-            .error
+            .errorMessage
             {
-                border: 1px red solid;
-                display: inline;
+                color: red;
             }
+            
         </style>
     </head>
     
@@ -33,6 +33,12 @@
                 <button id='btnSubmit' type="button" class="btn btn-primary float-right">Add Job</button>
                 <div class="clearfix"></div>
             </form>  
+            
+            <div class = "errorMessage">
+                <p2>
+                    <h5>Please enter a description and the number of square feet</h5>
+                </p2>
+            </div>
             
             <!--list group-->
             <div class='p-2 bg-dark'>
@@ -72,18 +78,21 @@
                     let item = $("<li></li>");
                     item.addClass("list-group-item");
                     item.html("<span class='bold'>Description:</span> " + model.jobs[i].desc + 
-                              " <span class='bold'>Square Feet:</span> " + model.jobs[i].sqFeet);
+                              " <span class='bold'>Square Feet:</span> " + model.jobs[i].sqFt);
                               console.log(i);
                               console.log(item);
                     $('#jobList').append(item);
                 }
-                if (model.descError == true)
+                if (model.descError == true || model.sqFeetError == true)
                 {
-                     $('#jobDesc').addClass("error");
+                    console.log("Error");
+                    
+                     $('#errorMessage').fadeIn(0);
                 }
-                if (model.sqFeetError == true)
+                else
                 {
-                     $('#sqFt').addClass("error");
+                    console.log("No Error");
+                    $('#errorMessage').fadeOut(0);
                 }
             }            
             
@@ -106,6 +115,7 @@
                 {
                     model.jobs.push({ desc: desc, sqFt: sqFeet});
                     console.log(desc, sqFeet);
+                    console.log(model.jobs[0]);
                 }
                 updateView();
             });
